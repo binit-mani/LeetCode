@@ -1,18 +1,17 @@
 class Solution {
 public:
-    void f(vector<vector<int>> &ans,vector<int> &nums,vector<int> t,int index){
-        if(index == nums.size()){
-            ans.push_back(t);
-            return;    
-        }
-        t.push_back(nums[index]);
-        f(ans,nums,t,index+1);
-        t.pop_back();
-        f(ans,nums,t,index+1);
-    }
     vector<vector<int>> subsets(vector<int>& nums) {
         vector<vector<int>> ans;
-        f(ans,nums,{},0);
+        
+        for(int i=0;i<(1<<nums.size());i++){
+            vector<int> t;
+            for(int j=1;j<(1<<nums.size());j*=2){
+                if((i&j) != 0){
+                    t.push_back(nums[log2(j)]);
+                }
+            }
+            ans.push_back(t);
+        }
         return ans;
     }
 };
